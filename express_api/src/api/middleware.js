@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-function validatorData() {
+function validatorData(nameProject) {
     const validate = `const { validationResult } = require("express-validator");
 
     const validateResult = (req, resp, next) => {

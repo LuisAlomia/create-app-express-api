@@ -4,6 +4,7 @@ const fs = require("fs");
 const writeFiles = require("./src/files/files");
 const database = require("./src/database/database");
 const models = require("./src/api/models");
+const validatorData = require("./src/api/middleware")
 const tokenAndHash = require("./src/utils/tokenAndHash");
 const api = require("./src/api/api");
 
@@ -38,7 +39,7 @@ fs.mkdirSync(`${nameProject}/src/validations`, { recursive: true });
 writeFiles( nameProject, typeDB, dbUri, username, password, host, data_base, dialect );
 database(typeDB, nameProject);
 models(typeDB, nameProject);
-validatorData();
+validatorData(nameProject);
 tokenAndHash(nameProject);
 api(typeDB, nameProject);
 
@@ -53,5 +54,6 @@ if (typeDB === "sequelize") {
 }
 shell.exec("npm i nodemon -D -E");
 
+shell.echo(`npm cd ${nameProject}`);
 shell.echo("npm run dev");
 shell.echo("npm run start");

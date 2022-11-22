@@ -37,10 +37,22 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
     const databaseConnect = require("./database/mongoose")
     
     function server(){
+
+      app.get("/", (req, resp) => {
+        resp
+          .status(200)
+          .json({
+            message: "welcome create-app-express-api", 
+            documentation: "swagger"});
+      });
+
       app.listen(port, () => {
         console.log("SERVER IN PORT: " + port);
       });
-      databaseConnect()
+      
+      databaseConnect();
+
+      console.log("http://localhost:9000/");
     } 
     
     server();
@@ -51,10 +63,22 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
     const databaseConnect = require("./database/sequelize")
     
     function server(){
+
+      app.get("/", (req, resp) => {
+        resp
+          .status(200)
+          .json({
+            message: "welcome create-app-express-api", 
+            documentation: "swagger"});
+      });
+
       app.listen(port, () => {
         console.log("SERVER IN PORT: " + port);
       });
-      databaseConnect()
+
+      databaseConnect();
+
+      console.log("http://localhost:9000/");
     } 
     
     server();
@@ -197,7 +221,7 @@ JWT_SECRET = secret_key_jwt`;
     (req, resp, next) => validateResult(req, resp, next),
   ];
   
-  modules.exports = { validateRegister, validateLogin }
+  module.exports = { validateRegister, validateLogin }
   `;
   fs.writeFileSync(`${nameProject}/src/validations/validate.js`, validate, (err) => {
     if (err) {
