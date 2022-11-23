@@ -258,6 +258,84 @@ function api(typeDB, nameProject) {
       .delete(userControllers.deleteUser);
     
     module.exports = router;
+
+    //Documentations
+
+    /**
+     * users
+     * @swagger
+     * /api/v1/users:
+     *  get:
+     *    tags:
+     *      - users
+     *    summary: "Get users"
+     *    description: Get all users
+     *    responses:
+     *      "200":
+     *        description: "OK"
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: array
+     *              items:
+     *                $ref: "#components/schemas/user"
+     *      "400":
+     *        description: "Error"
+     *    security:
+     *      - Auth: []
+     * /api/v1/users/{id}:
+     *  get:
+     *    tags:
+     *      - users
+     *    summary: "Get user by ID"
+     *    description: Find user by ID
+     *    parameters:
+     *       - name: id
+     *         in: path
+     *         description: ID of user to return
+     *         required: true
+     *         schema:
+     *            type: string
+     *    responses:
+     *      "200":
+     *        description: "OK"
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: array
+     *              items:
+     *                $ref: "#components/schemas/user"
+     *      "404":
+     *        description: "Invalid ID"
+     *    security:
+     *      - Auth: []
+     *  delete:
+     *    tags:
+     *      - users
+     *    summary: "Delete user by ID"
+     *    description: Delete user by ID
+     *    parameters:
+     *       - name: api_key
+     *         in: header
+     *         description: ''
+     *         required: false
+     *         schema:
+     *            type: string
+     *       - name: id
+     *         in: path
+     *         description: user id to delete
+     *         required: true
+     *         schema:
+     *            type: string
+     *    responses:
+     *      "204":
+     *        description: "OK"
+     *      "400":
+     *        description: "Invalid ID"
+     *    security:
+     *      - Auth: []
+     */
+
     `
     fs.writeFileSync(`${nameProject}/src/routes/user.routes.js`, routesUsers, (err) => {
         if (err) {
@@ -275,6 +353,60 @@ function api(typeDB, nameProject) {
       .post("/login", validateLogin, authControllers.login);
     
     module.exports = router;
+
+    //Documentations
+
+    /**
+     * auth
+     * @swagger
+     * /api/v1/auth/register:
+     *  post:
+     *    tags:
+     *      - auth
+     *    summary: "Register new users"
+     *    description: Add a new user
+     *    requestBody:
+     *       description: Create a new user in the database
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/user'
+     *       required: true
+     *    responses:
+     *      "201":
+     *        description: "create"
+     *        content:
+     *          application/json:
+     *            schema:
+     *              items:
+     *                $ref: "#components/schemas/user"
+     *      "400":
+     *        description: "Invalid inputs"
+     * /api/v1/auth/login:
+     *  post:
+     *    tags:
+     *      - auth
+     *    summary: "Login users"
+     *    description: Login of user
+     *    requestBody:
+     *       description: Logout user
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/auth'
+     *       required: true
+     *    responses:
+     *      "201":
+     *        description: "Login"
+     *        content:
+     *          application/json:
+     *            schema:
+     *              items:
+     *                $ref: "#components/schemas/auth"
+     *      "400":
+     *        description: "Invalid inputs"
+     */
+
     `
     fs.writeFileSync(`${nameProject}/src/routes/auth.routes.js`, routesAuth, (err) => {
         if (err) {

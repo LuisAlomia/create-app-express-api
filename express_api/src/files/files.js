@@ -6,7 +6,9 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
    */
   const app = `const express = require("express");
     const cors = require("cors");
+    const swaggerUI = require("swagger-ui-express");
 
+    const swaggerSetup = require("./docs/swagger");
     const userRoutes = require("./routes/user.routes")
     const authRoutes = require("./routes/auth.routes")
 
@@ -18,6 +20,9 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
     //Routes api
     app.use("/api/v1/users", userRoutes)
     app.use("/api/v1/auth", authRoutes)
+
+    //Documentation
+    app.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(swaggerSetup));
 
     module.exports = app;
 `;
@@ -38,12 +43,12 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
     
     function server(){
 
-      app.get("/", (req, resp) => {
+      app.get("/api/v1", (req, resp) => {
         resp
           .status(200)
           .json({
             message: "welcome create-app-express-api", 
-            documentation: "swagger"});
+            documentation: "http://localhost:9000/api/v1/docs/"});
       });
 
       app.listen(port, () => {
@@ -52,7 +57,7 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
       
       databaseConnect();
 
-      console.log("http://localhost:9000/");
+      console.log("http://localhost:9000/api/v1");
     } 
     
     server();
