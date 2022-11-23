@@ -50,7 +50,7 @@ function writeFiles(
     const { port } = require("./config/env.config.js")
     const databaseConnect = require("./database/mongoose")
     
-    function server(){
+    const server = () => {
 
       app.get("/api/v1", (req, resp) => {
         resp
@@ -158,15 +158,15 @@ function writeFiles(
    * write environment variable .env file
    */
   const env = `PORT = 9000
-    DB_URI = ${dbUri}
+DB_URI = ${dbUri}
 
-    DB_USERNAME = ${username}
-    DB_PASSWORD = ${password}
-    DB_HOST = ${host}
-    DB_DATABASE = ${data_base}
-    DB_DIALECT = ${dialect}
+DB_USERNAME = ${username}
+DB_PASSWORD = ${password}
+DB_HOST = ${host}
+DB_DATABASE = ${data_base}
+DB_DIALECT = ${dialect}
 
-    JWT_SECRET = secret_key_jwt`;
+JWT_SECRET = secret_key_jwt`;
   fs.writeFileSync(`${nameProject}/.env`, env, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -177,15 +177,15 @@ function writeFiles(
    * write environment variable example .env file
    */
   const envExample = `PORT = 9000
-    DB_URI = mongodb://localhost:27017/test
+DB_URI = mongodb://localhost:27017/test
 
-    DB_USERNAME = username
-    DB_PASSWORD = password
-    DB_HOST = localhost
-    DB_DATABASE = test
-    DB_DIALECT = mySQL || postgres || mariaDB
+DB_USERNAME = username
+DB_PASSWORD = password
+DB_HOST = localhost
+DB_DATABASE = test
+DB_DIALECT = mySQL || postgres || mariaDB
 
-    JWT_SECRET = secret_key_jwt`;
+JWT_SECRET = secret_key_jwt`;
   fs.writeFileSync(`${nameProject}/.env.example`, envExample, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -193,26 +193,26 @@ function writeFiles(
   });
 
   const package = `{
-      "name": "${nameProject}",
-      "version": "1.0.0",
-      "description": "",
-      "main": "index.js",
-      "scripts": {
-        "start": "node ./src/index.js",
-        "dev": "nodemon ./src/index.js",
-        "test": "",
-        "lint": "eslint \"**/*.js\" --ignore-path .gitignore",
-        "prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore"
-      },
-      "keywords": [],
-      "author": "",
-      "license": "ISC",
-      "dependencies": {
-      },
-      "devDependencies": {
-        "nodemon": "2.0.20"
-      }
-    }
+  "name": "${nameProject}",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js",
+    "test": "",
+    "lint": ${JSON.stringify("eslint \"**/*.js\" --ignore-path .gitignore")},
+    "prettier": ${JSON.stringify("prettier \"**/*.js\" --write --ignore-path .gitignore")}
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+
+  }
+}
     `;
   fs.writeFileSync(`${nameProject}/package.json`, package, (err) => {
     if (err) {
@@ -249,21 +249,21 @@ function writeFiles(
   );
 
   const eslintrc = `{
-      "env": {
-          "commonjs": true,
-          "es2021": true,
-          "node": true
-      },
-      "extends": "eslint:recommended",
-      "overrides": [
-      ],
-      "parserOptions": {
-          "ecmaVersion": "latest"
-      },
-      "rules": {
-      }
-    }`;
-  fs.writeFileSync(`${nameProject}/src/.eslintrc.json`, eslintrc, (err) => {
+  "env": {
+      "commonjs": true,
+      "es2021": true,
+      "node": true
+  },
+  "extends": "eslint:recommended",
+  "overrides": [
+  ],
+  "parserOptions": {
+      "ecmaVersion": "latest"
+  },
+  "rules": {
+  }
+}`;
+  fs.writeFileSync(`${nameProject}/.eslintrc.json`, eslintrc, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
     }

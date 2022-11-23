@@ -10,7 +10,7 @@ const api = require("./src/api/api");
 const swagger = require("./src/docs/swagger.doc");
 
 //Name project
-const nameProject = "fidel";
+const nameProject = "users";
 
 //TYPE db
 const typeDB = "mongoose"; // mongoose or none or sequelize
@@ -68,7 +68,9 @@ if (typeDB === "sequelize") {
 } else {
   shell.exec("npm i express cors dotenv bcrypt jsonwebtoken  -E");
 }
-shell.exec("npm i nodemon eslint prettier eslint-config-prettier -D -E");
+shell.exec("npm i nodemon eslint prettier eslint-config-prettier -D -E"); 
+
+shell.exec("npm run prettier") 
 
 shell.echo("  ");
 shell.echo(`  npm cd ${nameProject}`);

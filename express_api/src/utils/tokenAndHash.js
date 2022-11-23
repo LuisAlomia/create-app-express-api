@@ -19,11 +19,11 @@ function tokenAndHash(nameProject) {
 
   const hash = `const bcrypt = require("bcrypt");
 
-    hashedPassword = (password) => {
+    const hashedPassword = (password) => {
       return bcrypt.hashSync(password, 10);
     };
     
-    comparedPassword = (plainPassword, hashPassword) => {
+    const comparedPassword = (plainPassword, hashPassword) => {
       return bcrypt.compareSync(plainPassword, hashPassword);
     };
     

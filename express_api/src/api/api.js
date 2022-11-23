@@ -7,17 +7,17 @@ function api(typeDB, nameProject) {
   if (typeDB === "sequelize") {
     servicesUsers = `const Users = require("../models/users.models");
         
-        async function getAll(){
+        const getAll = async () => {
             const data = await Users.findAll({});
             return data;
         };
             
-        async function getOne(id){
+        const getOne = async (id) => {
             const data = await Users.findOne({ where: { id } });
             return data;
         };
             
-        async function deleteUser(id){
+        const deleteUser = async (id) => {
             const data = await Users.destroy({ where: { id } });
             return data;
         };
@@ -58,17 +58,17 @@ function api(typeDB, nameProject) {
   } else if (typeDB === "mongoose") {
     servicesUsers = `const Users = require("../models/users.models");
     
-        async function getAll(){
+        const getAll = async () => {
             const data = await Users.find({}, { password: 0 });
             return data;
         };
             
-        async function getOne(id){
+        const getOne = async (id) => {
             const data = await Users.findOne({ _id: id }, { password: 0 });
             return data;
         };
             
-        async function deleteUser(id){
+        const deleteUser = async (id) => {
             const data = await Users.deleteOne({ _id: id });
             return data;
         };
@@ -109,18 +109,18 @@ function api(typeDB, nameProject) {
     
         const arrayUsers = [{id: 1, name: "user1"},{id: 2, name: "user2"},{id: 3, name: "user3"}];
 
-        async function getAll(){
+        const getAll = () => {
             const data = await arrayUsers
             return data;
         };
             
-        async function getOne(id){
+        const getOne = (id) => {
             const idNumber = Number(id)
             const data = await arrayUsers.filter(user => user.id === idNumber)
             return data;
         };
             
-        async function deleteUser(id){
+        const deleteUser = (id) => {
             const idNumber = Number(id)
             const data = await arrayUsers.filter(user => user.id !== idNumber);
             return data;
