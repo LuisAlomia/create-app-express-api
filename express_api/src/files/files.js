@@ -122,21 +122,21 @@ function writeFiles(
    */
   const config = `require("dotenv").config();
 
-    const config = {
-      port: process.env.PORT || 9001,
-      db:{
-        uri: process.env.DB_URI || "mongodb://localhost:27017/test", //uri mongodb or uri MongoDB Atlas
-        username: process.env.DB_USERNAME || "username",
-        password: process.env.DB_PASSWORD || "rood",
-        host: process.env.DB_HOST || "localhost",
-        database: process.env.DB_DATABASE || "test", //name data base
-        dialect: process.env.DB_DIALECT || "postgres", 
-      },
-      secretOrKey: process.env.JWT_SECRET || "private_Key_JWT",
-    }
+const config = {
+  port: process.env.PORT || 9001,
+  db:{
+    uri: process.env.DB_URI || "mongodb://localhost:27017/test", //uri mongodb or uri MongoDB Atlas
+    username: process.env.DB_USERNAME || "username",
+    password: process.env.DB_PASSWORD || "rood",
+    host: process.env.DB_HOST || "localhost",
+    database: process.env.DB_DATABASE || "test", //name data base
+    dialect: process.env.DB_DIALECT || "postgres", 
+  },
+  secretOrKey: process.env.JWT_SECRET || "private_Key_JWT",
+}
 
-    module.exports = config;
-  `;
+module.exports = config;
+`;
   fs.writeFileSync(`${nameProject}/src/config/env.config.js`, config, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -147,7 +147,7 @@ function writeFiles(
    * write .gitignore file
    */
   const gitignore = `node_modules
-    .env`;
+.env`;
   fs.writeFileSync(`${nameProject}/.gitignore`, gitignore, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -158,15 +158,15 @@ function writeFiles(
    * write environment variable .env file
    */
   const env = `PORT = 9000
-DB_URI = ${dbUri}
+    DB_URI = ${dbUri}
 
-DB_USERNAME = ${username}
-DB_PASSWORD = ${password}
-DB_HOST = ${host}
-DB_DATABASE = ${data_base}
-DB_DIALECT = ${dialect}
+    DB_USERNAME = ${username}
+    DB_PASSWORD = ${password}
+    DB_HOST = ${host}
+    DB_DATABASE = ${data_base}
+    DB_DIALECT = ${dialect}
 
-JWT_SECRET = secret_key_jwt`;
+    JWT_SECRET = secret_key_jwt`;
   fs.writeFileSync(`${nameProject}/.env`, env, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -177,15 +177,15 @@ JWT_SECRET = secret_key_jwt`;
    * write environment variable example .env file
    */
   const envExample = `PORT = 9000
-DB_URI = mongodb://localhost:27017/test
+    DB_URI = mongodb://localhost:27017/test
 
-DB_USERNAME = username
-DB_PASSWORD = password
-DB_HOST = localhost
-DB_DATABASE = test
-DB_DIALECT = mySQL || postgres || mariaDB
+    DB_USERNAME = username
+    DB_PASSWORD = password
+    DB_HOST = localhost
+    DB_DATABASE = test
+    DB_DIALECT = mySQL || postgres || mariaDB
 
-JWT_SECRET = secret_key_jwt`;
+    JWT_SECRET = secret_key_jwt`;
   fs.writeFileSync(`${nameProject}/.env.example`, envExample, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -193,27 +193,27 @@ JWT_SECRET = secret_key_jwt`;
   });
 
   const package = `{
-  "name": "${nameProject}",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js",
-    "test": "",
-    "lint": ${JSON.stringify("eslint \"**/*.js\" --ignore-path .gitignore")},
-    "prettier": ${JSON.stringify("prettier \"**/*.js\" --write --ignore-path .gitignore")}
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-  },
-  "devDependencies": {
-
+    "name": "${nameProject}",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "start": "node ./src/index.js",
+      "dev": "nodemon ./src/index.js",
+      "test": "",
+      "lint": "eslint \"**/*.js\" --ignore-path .gitignore",
+      "prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+    },
+    "devDependencies": {
+      "nodemon": "2.0.20"
+    }
   }
-}
-    `;
+  `;
   fs.writeFileSync(`${nameProject}/package.json`, package, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -221,23 +221,23 @@ JWT_SECRET = secret_key_jwt`;
   });
 
   const validate = `const { check } = require("express-validator");
-    const validateResult = require("../middleware/validator.middleware");
-    
-    const validateRegister = [
-      check("username").exists().notEmpty().trim().isString(),
-      check("email").exists().notEmpty().trim().isString(),
-      check("password").exists().notEmpty().trim().isString(),
-      (req, resp, next) => validateResult(req, resp, next),
-    ];
+  const validateResult = require("../middleware/validator.middleware");
+  
+  const validateRegister = [
+    check("username").exists().notEmpty().trim().isString(),
+    check("email").exists().notEmpty().trim().isString(),
+    check("password").exists().notEmpty().trim().isString(),
+    (req, resp, next) => validateResult(req, resp, next),
+  ];
 
-    const validateLogin = [
-      check("email").exists().notEmpty().trim().isString(),
-      check("password").exists().notEmpty().trim().isString(),
-      (req, resp, next) => validateResult(req, resp, next),
-    ];
-    
-    module.exports = { validateRegister, validateLogin }
-    `;
+  const validateLogin = [
+    check("email").exists().notEmpty().trim().isString(),
+    check("password").exists().notEmpty().trim().isString(),
+    (req, resp, next) => validateResult(req, resp, next),
+  ];
+  
+  module.exports = { validateRegister, validateLogin }
+  `;
   fs.writeFileSync(
     `${nameProject}/src/validations/validate.js`,
     validate,
@@ -247,27 +247,6 @@ JWT_SECRET = secret_key_jwt`;
       }
     }
   );
-
-  const eslintrc = `{
-  "env": {
-      "commonjs": true,
-      "es2021": true,
-      "node": true
-  },
-  "extends": "eslint:recommended",
-  "overrides": [
-  ],
-  "parserOptions": {
-      "ecmaVersion": "latest"
-  },
-  "rules": {
-  }
-}`;
-  fs.writeFileSync(`${nameProject}/.eslintrc.json`, eslintrc, (err) => {
-    if (err) {
-      console.log(`Error: ${err}`);
-    }
-  });
 }
 
 module.exports = writeFiles;
