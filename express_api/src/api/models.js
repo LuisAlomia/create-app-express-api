@@ -1,9 +1,9 @@
 const fs = require("fs");
 
 function models(typeDB, nameProject) {
-    let model;
-    if (typeDB === "sequelize") {
-        model = `const { DataTypes } = require("sequelize");
+  let model;
+  if (typeDB === "sequelize") {
+    model = `const { DataTypes } = require("sequelize");
         const { sequelize } = require("../database/sequelize");
         
         const Users = dbSequelize.define("users", {
@@ -46,9 +46,9 @@ function models(typeDB, nameProject) {
         });
         
         module.exports = Users;
-        `
-    } else if (typeDB === "mongoose") {
-        model = `const { Schema, model } = require("mongoose");
+        `;
+  } else if (typeDB === "mongoose") {
+    model = `const { Schema, model } = require("mongoose");
 
         const UserSchema = new Schema(
           {
@@ -82,15 +82,19 @@ function models(typeDB, nameProject) {
         
         const User = model("User", UserSchema);
         
-        module.exports = User;`
-    } else {
-        model = `"//create models"`
+        module.exports = User;`;
+  } else {
+    model = `"//create models"`;
+  }
+  fs.writeFileSync(
+    `${nameProject}/src/models/users.models.js`,
+    model,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
     }
-    fs.writeFileSync(`${nameProject}/src/models/users.models.js`, model, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-      });
+  );
 }
 
-module.exports = models
+module.exports = models;

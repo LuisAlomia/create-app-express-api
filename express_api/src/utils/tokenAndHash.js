@@ -1,7 +1,7 @@
-const fs = require("fs")
+const fs = require("fs");
 
-function tokenAndHash(nameProject){
-    const token = `const jwt = require("jsonwebtoken");
+function tokenAndHash(nameProject) {
+  const token = `const jwt = require("jsonwebtoken");
     const { secretOrKey } = require("../config/env.config");
     
     const createToken = (id, username, role) => {
@@ -10,14 +10,14 @@ function tokenAndHash(nameProject){
     
     module.exports = createToken;
     
-    `
-    fs.writeFileSync(`${nameProject}/src/utils/createToken.js`, token, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
+    `;
+  fs.writeFileSync(`${nameProject}/src/utils/createToken.js`, token, (err) => {
+    if (err) {
+      console.log(`Error: ${err}`);
+    }
+  });
 
-    const hash = `const bcrypt = require("bcrypt");
+  const hash = `const bcrypt = require("bcrypt");
 
     hashedPassword = (password) => {
       return bcrypt.hashSync(password, 10);
@@ -28,12 +28,16 @@ function tokenAndHash(nameProject){
     };
     
     module.exports = { hashedPassword, comparedPassword };
-    `
-    fs.writeFileSync(`${nameProject}/src/utils/hashedPassword.js`, hash, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
-} 
+    `;
+  fs.writeFileSync(
+    `${nameProject}/src/utils/hashedPassword.js`,
+    hash,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
+    }
+  );
+}
 
 module.exports = tokenAndHash;

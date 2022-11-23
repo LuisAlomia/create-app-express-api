@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 function database(typeDB, nameProject) {
-   if (typeDB === "sequelize") {
+  if (typeDB === "sequelize") {
     const sequelize = `const { db } = require("../config/env.config");
     const { Sequelize } = require("sequelize");
     
@@ -27,13 +27,17 @@ function database(typeDB, nameProject) {
     }
     
     module.exports = { sequelize, databaseConnect };
-    `
-    fs.writeFileSync(`${nameProject}/src/database/sequelize.js`, sequelize, (err) => {
+    `;
+    fs.writeFileSync(
+      `${nameProject}/src/database/sequelize.js`,
+      sequelize,
+      (err) => {
         if (err) {
           console.log(`Error: ${err}`);
         }
-      });
-   } else if(typeDB === "mongoose" ){
+      }
+    );
+  } else if (typeDB === "mongoose") {
     const mongoose = `const { db } = require("../config/env.config");
     const mongoose = require('mongoose');
   
@@ -45,19 +49,27 @@ function database(typeDB, nameProject) {
     }
     
     module.exports = databaseConnect;
-    `
-    fs.writeFileSync(`${nameProject}/src/database/mongoose.js`, mongoose, (err) => {
+    `;
+    fs.writeFileSync(
+      `${nameProject}/src/database/mongoose.js`,
+      mongoose,
+      (err) => {
         if (err) {
           console.log(`Error: ${err}`);
         }
-      }); 
-   } else {
-    fs.writeFileSync(`${nameProject}/src/database/database.js`, "//config data base", (err) => {
-      if (err) {
-        console.log(`Error: ${err}`);
       }
-    }); 
-   }
+    );
+  } else {
+    fs.writeFileSync(
+      `${nameProject}/src/database/database.js`,
+      "//config data base",
+      (err) => {
+        if (err) {
+          console.log(`Error: ${err}`);
+        }
+      }
+    );
+  }
 }
 
 module.exports = database;

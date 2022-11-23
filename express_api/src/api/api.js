@@ -1,11 +1,11 @@
 const fs = require("fs");
 
 function api(typeDB, nameProject) {
-    let servicesUsers;
-    let servicesAuth;
+  let servicesUsers;
+  let servicesAuth;
 
-   if (typeDB === "sequelize") {
-        servicesUsers = `const Users = require("../models/users.models");
+  if (typeDB === "sequelize") {
+    servicesUsers = `const Users = require("../models/users.models");
         
         async function getAll(){
             const data = await Users.findAll({});
@@ -24,9 +24,9 @@ function api(typeDB, nameProject) {
 
 
         module.exports = {getAll, getOne, deleteUser};
-        `
+        `;
 
-        servicesAuth = `const Users = require("../models/users.models");
+    servicesAuth = `const Users = require("../models/users.models");
         const uuid = require("uuid");
         const { hashedPassword, comparedPassword } = require("../utils/hashedPassword");
         const createToken = require("../utils/createToken");
@@ -54,10 +54,9 @@ function api(typeDB, nameProject) {
         };
         
         module.exports = { register, login };
-        `
-
-    } else if (typeDB === "mongoose"){
-        servicesUsers = `const Users = require("../models/users.models");
+        `;
+  } else if (typeDB === "mongoose") {
+    servicesUsers = `const Users = require("../models/users.models");
     
         async function getAll(){
             const data = await Users.find({}, { password: 0 });
@@ -76,9 +75,9 @@ function api(typeDB, nameProject) {
     
     
         module.exports = {getAll, getOne, deleteUser};
-        `
+        `;
 
-        servicesAuth = `const Users = require("../models/users.models");
+    servicesAuth = `const Users = require("../models/users.models");
         const { hashedPassword, comparedPassword } = require("../utils/hashedPassword");
         const createToken = require("../utils/createToken");
         
@@ -104,9 +103,9 @@ function api(typeDB, nameProject) {
         };
         
         module.exports = { register, login };
-        `
-    } else {
-        servicesUsers = `//const Users = require(""); //import model
+        `;
+  } else {
+    servicesUsers = `//const Users = require(""); //import model
     
         const arrayUsers = [{id: 1, name: "user1"},{id: 2, name: "user2"},{id: 3, name: "user3"}];
 
@@ -129,9 +128,9 @@ function api(typeDB, nameProject) {
 
 
         module.exports = {getAll, getOne, deleteUser};
-        `
+        `;
 
-        servicesAuth = `//const Users = require(""); //import model
+    servicesAuth = `//const Users = require(""); //import model
         const { hashedPassword, comparedPassword } = require("../utils/hashedPassword");
         const createToken = require("../utils/createToken");
         
@@ -160,22 +159,30 @@ function api(typeDB, nameProject) {
         };
         
         module.exports = { register, login };
-        `
+        `;
+  }
+
+  fs.writeFileSync(
+    `${nameProject}/src/services/user.services.js`,
+    servicesUsers,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
     }
+  );
 
-    fs.writeFileSync(`${nameProject}/src/services/user.services.js`, servicesUsers, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
+  fs.writeFileSync(
+    `${nameProject}/src/services/auth.services.js`,
+    servicesAuth,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
+    }
+  );
 
-    fs.writeFileSync(`${nameProject}/src/services/auth.services.js`, servicesAuth, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
-
-    const controllersUsers  = `const userServices = require("../services/user.services");
+  const controllersUsers = `const userServices = require("../services/user.services");
 
     const getAll = (_req, resp) => {
       userServices
@@ -211,14 +218,18 @@ function api(typeDB, nameProject) {
     };
 
     module.exports = {getAll, getOne, deleteUser};
-    `
-    fs.writeFileSync(`${nameProject}/src/controllers/user.controllers.js`, controllersUsers, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
+    `;
+  fs.writeFileSync(
+    `${nameProject}/src/controllers/user.controllers.js`,
+    controllersUsers,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
+    }
+  );
 
-    const controllerAuth = `const authServices = require("../services/auth.services");
+  const controllerAuth = `const authServices = require("../services/auth.services");
 
     const register = (req, resp) => {
     const { username, email, password } = req.body;
@@ -239,14 +250,18 @@ function api(typeDB, nameProject) {
     };
 
     module.exports = { register, login };
-    `
-    fs.writeFileSync(`${nameProject}/src/controllers/auth.controllers.js`, controllerAuth, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
+    `;
+  fs.writeFileSync(
+    `${nameProject}/src/controllers/auth.controllers.js`,
+    controllerAuth,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
+    }
+  );
 
-    const routesUsers = `const router = require("express").Router();
+  const routesUsers = `const router = require("express").Router();
     
     const userControllers = require("../controllers/user.controllers");
     
@@ -336,14 +351,18 @@ function api(typeDB, nameProject) {
      *      - Auth: []
      */
 
-    `
-    fs.writeFileSync(`${nameProject}/src/routes/user.routes.js`, routesUsers, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
-  
-    const routesAuth = `const router = require("express").Router();
+    `;
+  fs.writeFileSync(
+    `${nameProject}/src/routes/user.routes.js`,
+    routesUsers,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
+    }
+  );
+
+  const routesAuth = `const router = require("express").Router();
 
     const authControllers = require("../controllers/auth.controllers");
     const { validateRegister, validateLogin } = require("../validations/validate");
@@ -407,13 +426,16 @@ function api(typeDB, nameProject) {
      *        description: "Invalid inputs"
      */
 
-    `
-    fs.writeFileSync(`${nameProject}/src/routes/auth.routes.js`, routesAuth, (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-    });
-
+    `;
+  fs.writeFileSync(
+    `${nameProject}/src/routes/auth.routes.js`,
+    routesAuth,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
+    }
+  );
 }
 
 module.exports = api;

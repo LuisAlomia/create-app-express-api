@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 function swagger(nameProject) {
-    const docConfig = `const swaggerJSDoc = require("swagger-jsdoc");
+  const docConfig = `const swaggerJSDoc = require("swagger-jsdoc");
 
     const swaggerDefinition = {
       openapi: "3.0.0",
@@ -62,13 +62,12 @@ function swagger(nameProject) {
     };
     
     module.exports = swaggerJSDoc(swaggerOptions);
-    `
-    fs.writeFileSync(`${nameProject}/src/docs/swagger.js`, docConfig,  (err) => {
-        if (err) {
-          console.log(`Error: ${err}`);
-        }
-
-    })
-} 
+    `;
+  fs.writeFileSync(`${nameProject}/src/docs/swagger.js`, docConfig, (err) => {
+    if (err) {
+      console.log(`Error: ${err}`);
+    }
+  });
+}
 
 module.exports = swagger;

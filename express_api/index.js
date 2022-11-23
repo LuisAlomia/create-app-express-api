@@ -4,7 +4,7 @@ const fs = require("fs");
 const writeFiles = require("./src/files/files");
 const database = require("./src/database/database");
 const models = require("./src/api/models");
-const validatorData = require("./src/api/middleware")
+const validatorData = require("./src/api/middleware");
 const tokenAndHash = require("./src/utils/tokenAndHash");
 const api = require("./src/api/api");
 const swagger = require("./src/docs/swagger.doc");
@@ -25,7 +25,7 @@ const data_base = "test";
 const dialect = "postgres";
 
 //Create folders
-fs.mkdirSync(`${nameProject}`, {recursive: true});
+fs.mkdirSync(`${nameProject}`, { recursive: true });
 fs.mkdirSync(`${nameProject}/src/config`, { recursive: true });
 fs.mkdirSync(`${nameProject}/src/models`, { recursive: true });
 fs.mkdirSync(`${nameProject}/src/docs`, { recursive: true });
@@ -38,7 +38,16 @@ fs.mkdirSync(`${nameProject}/src/utils`, { recursive: true });
 fs.mkdirSync(`${nameProject}/src/validations`, { recursive: true });
 
 //Creator files
-writeFiles( nameProject, typeDB, dbUri, username, password, host, data_base, dialect );
+writeFiles(
+  nameProject,
+  typeDB,
+  dbUri,
+  username,
+  password,
+  host,
+  data_base,
+  dialect
+);
 database(typeDB, nameProject);
 swagger(nameProject);
 models(typeDB, nameProject);
@@ -47,15 +56,19 @@ tokenAndHash(nameProject);
 api(typeDB, nameProject);
 
 //Install libraries
-shell.cd(nameProject)
+shell.cd(nameProject);
 if (typeDB === "sequelize") {
-    shell.exec("npm i express cors dotenv bcrypt jsonwebtoken express-validator swagger-jsdoc swagger-ui-express pg pg-hstore sequelize uuid -E"); // cSpell:ignore hstore
-} else if(typeDB === "mongoose") {
-    shell.exec("npm i express cors dotenv bcrypt jsonwebtoken express-validator swagger-jsdoc swagger-ui-express mongoose -E");
+  shell.exec(
+    "npm i express cors dotenv bcrypt jsonwebtoken express-validator swagger-jsdoc swagger-ui-express pg pg-hstore sequelize uuid -E"
+  ); // cSpell:ignore hstore
+} else if (typeDB === "mongoose") {
+  shell.exec(
+    "npm i express cors dotenv bcrypt jsonwebtoken express-validator swagger-jsdoc swagger-ui-express mongoose -E"
+  );
 } else {
-    shell.exec("npm i express cors dotenv bcrypt jsonwebtoken  -E");
+  shell.exec("npm i express cors dotenv bcrypt jsonwebtoken  -E");
 }
-shell.exec("npm i nodemon -D -E"); 
+shell.exec("npm i nodemon eslint prettier eslint-config-prettier -D -E");
 
 shell.echo("  ");
 shell.echo(`  npm cd ${nameProject}`);

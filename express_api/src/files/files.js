@@ -1,6 +1,15 @@
 const fs = require("fs");
 
-function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_base, dialect) {
+function writeFiles(
+  nameProject,
+  typeDB,
+  dbUri,
+  username,
+  password,
+  host,
+  data_base,
+  dialect
+) {
   /**
    * write app file (config app Express)
    */
@@ -35,7 +44,7 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
   /**
    * write index file (Run server)
    */
-  let index
+  let index;
   if (typeDB === "mongoose") {
     index = `const app = require("./app");
     const { port } = require("./config/env.config.js")
@@ -61,8 +70,8 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
     } 
     
     server();
-    ` 
-  } else if(typeDB === "sequelize") {
+    `;
+  } else if (typeDB === "sequelize") {
     index = `const app = require("./app");
     const { port } = require("./config/env.config.js")
     const databaseConnect = require("./database/sequelize")
@@ -87,7 +96,7 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
     } 
     
     server();
-    ` 
+    `;
   } else {
     index = `const app = require("./app");
     const { port } = require("./config/env.config.js")
@@ -99,9 +108,9 @@ function writeFiles(nameProject, typeDB, dbUri, username, password, host, data_b
     } 
     
     server();
-    ` 
+    `;
   }
-  
+
   fs.writeFileSync(`${nameProject}/src/index.js`, index, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -183,7 +192,6 @@ JWT_SECRET = secret_key_jwt`;
     }
   });
 
-
   const package = `{
     "name": "${nameProject}",
     "version": "1.0.0",
@@ -192,7 +200,9 @@ JWT_SECRET = secret_key_jwt`;
     "scripts": {
       "start": "node ./src/index.js",
       "dev": "nodemon ./src/index.js",
-      "test": ""
+      "test": "",
+      "lint": "eslint \"**/*.js\" --ignore-path .gitignore",
+      "prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore"
     },
     "keywords": [],
     "author": "",
@@ -228,13 +238,15 @@ JWT_SECRET = secret_key_jwt`;
   
   module.exports = { validateRegister, validateLogin }
   `;
-  fs.writeFileSync(`${nameProject}/src/validations/validate.js`, validate, (err) => {
-    if (err) {
-      console.log(`Error: ${err}`);
+  fs.writeFileSync(
+    `${nameProject}/src/validations/validate.js`,
+    validate,
+    (err) => {
+      if (err) {
+        console.log(`Error: ${err}`);
+      }
     }
-  });
+  );
 }
-
-  
 
 module.exports = writeFiles;
