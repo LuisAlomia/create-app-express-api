@@ -1,4 +1,0 @@
-https://www.npmjs.com/package/@immjunaid/create-express-restapis
-https://www.npmjs.com/package/express-app-cli
-https://www.npmjs.com/package/create-express-app
-https://github.com/wesleytodd/create-express-app

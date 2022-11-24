@@ -1,15 +1,25 @@
 {
-  "name": "piloto",
+  "name": "create-app-express-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "console application that allows the automation of an api",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
     "lint": "eslint \"**/*.js\" --ignore-path .gitignore",
     "prettier": "prettier \"**/*.js\" --write --ignore-path .gitignore"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisAlomia/create-app-express-api.git"
+  },
+  "keywords": [
+    "CLI",
+    "API",
+    "CRUD",
+    "EXPRESS"
+  ],
+  "author": "Luis Fidel Alomia Valencia",
   "license": "ISC",
   "dependencies": {
     "chalk": "4.1.2",
@@ -20,5 +30,9 @@
     "eslint": "8.28.0",
     "eslint-config-prettier": "8.5.0",
     "prettier": "2.7.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/LuisAlomia/create-app-express-api/issues"
+  },
+  "homepage": "https://github.com/LuisAlomia/create-app-express-api#readme"
 }
