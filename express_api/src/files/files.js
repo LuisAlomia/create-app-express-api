@@ -8,7 +8,10 @@ function writeFiles(
   password,
   host,
   data_base,
-  dialect
+  dialect,
+  description,
+  urlRepository,
+  author
 ) {
   /**
    * write app file (config app Express)
@@ -65,8 +68,6 @@ function writeFiles(
       });
       
       databaseConnect();
-
-      console.log("http://localhost:9000/api/v1");
     } 
     
     server();
@@ -74,16 +75,16 @@ function writeFiles(
   } else if (typeDB === "sequelize") {
     index = `const app = require("./app");
     const { port } = require("./config/env.config.js")
-    const databaseConnect = require("./database/sequelize")
+    const { databaseConnect } = require("./database/sequelize")
     
-    function server(){
+    const server = () => {
 
-      app.get("/", (req, resp) => {
+      app.get("/api/v1", (req, resp) => {
         resp
           .status(200)
           .json({
             message: "welcome create-app-express-api", 
-            documentation: "swagger"});
+            documentation: "http://localhost:9000/api/v1/docs/"});
       });
 
       app.listen(port, () => {
@@ -91,8 +92,6 @@ function writeFiles(
       });
 
       databaseConnect();
-
-      console.log("http://localhost:9000/");
     } 
     
     server();
@@ -101,7 +100,7 @@ function writeFiles(
     index = `const app = require("./app");
     const { port } = require("./config/env.config.js")
     
-    function server(){
+    const server = () => {
       app.listen(port, () => {
         console.log("SERVER IN PORT: " + port);
       });
@@ -147,7 +146,7 @@ function writeFiles(
    * write .gitignore file
    */
   const gitignore = `node_modules
-    .env`;
+.env`;
   fs.writeFileSync(`${nameProject}/.gitignore`, gitignore, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
@@ -158,14 +157,17 @@ function writeFiles(
    * write environment variable .env file
    */
   const env = `PORT = 9000
+## MONGO DATABASE
 DB_URI = ${dbUri}
 
+## SEQUELIZE DATABESE
 DB_USERNAME = ${username}
 DB_PASSWORD = ${password}
 DB_HOST = ${host}
 DB_DATABASE = ${data_base}
 DB_DIALECT = ${dialect}
 
+## JSON WEB TOKEN
 JWT_SECRET = secret_key_jwt`;
   fs.writeFileSync(`${nameProject}/.env`, env, (err) => {
     if (err) {
@@ -177,14 +179,18 @@ JWT_SECRET = secret_key_jwt`;
    * write environment variable example .env file
    */
   const envExample = `PORT = 9000
+
+## MONGO DATABASE
 DB_URI = mongodb://localhost:27017/test
 
+## SEQUELIZE DATABESE
 DB_USERNAME = username
 DB_PASSWORD = password
 DB_HOST = localhost
 DB_DATABASE = test
 DB_DIALECT = mySQL || postgres || mariaDB
 
+## JSON WEB TOKEN
 JWT_SECRET = secret_key_jwt`;
   fs.writeFileSync(`${nameProject}/.env.example`, envExample, (err) => {
     if (err) {
@@ -195,17 +201,23 @@ JWT_SECRET = secret_key_jwt`;
   const package = `{
   "name": "${nameProject}",
   "version": "1.0.0",
-  "description": "",
+  "description": "${description}",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
     "test": "",
-    "lint": ${JSON.stringify("eslint \"**/*.js\" --ignore-path .gitignore")},
-    "prettier": ${JSON.stringify("prettier \"**/*.js\" --write --ignore-path .gitignore")}
+    "lint": ${JSON.stringify('eslint "**/*.js" --ignore-path .gitignore')},
+    "prettier": ${JSON.stringify(
+      'prettier "**/*.js" --write --ignore-path .gitignore'
+    )}
+  },
+  "repository": {
+    "type": "git",
+    "url": "${urlRepository}"
   },
   "keywords": [],
-  "author": "",
+  "author": "${author}",
   "license": "ISC",
   "dependencies": {
   },
@@ -264,6 +276,18 @@ JWT_SECRET = secret_key_jwt`;
   }
 }`;
   fs.writeFileSync(`${nameProject}/.eslintrc.json`, eslintrc, (err) => {
+    if (err) {
+      console.log(`Error: ${err}`);
+    }
+  });
+
+  const prettier = `{
+  "trailingComma": "es5",
+  "tabWidth": 2, 
+  "semi": true, 
+  "singleQuote": true 
+}`;
+  fs.writeFileSync(`${nameProject}/.prettierrc.json`, prettier, (err) => {
     if (err) {
       console.log(`Error: ${err}`);
     }

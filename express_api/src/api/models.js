@@ -6,7 +6,7 @@ function models(typeDB, nameProject) {
     model = `const { DataTypes } = require("sequelize");
         const { sequelize } = require("../database/sequelize");
         
-        const Users = dbSequelize.define("users", {
+        const Users = sequelize.define("users", {
           id: {
             type: DataTypes.UUID,
             primaryKey: true,

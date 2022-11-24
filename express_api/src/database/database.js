@@ -13,18 +13,18 @@ function database(typeDB, nameProject) {
       dialect: db.dialect,
     });
     
-    const databaseConnect = () => {
-     
-        sequelize
-          .authenticate()
-          .then(() => console.log("DATABASE CONNECTED"))
-          .catch((err) => console.error(err));
-        
-        sequelize
-          .sync()
-          .then(() => console.log("DATABASE SYNCHRONIZED"))
-          .catch((err) => console.error(err));
-    }
+    const databaseConnect = async () => {
+      try {
+        await sequelize.authenticate();
+        await sequelize.sync();
+    
+        console.log('DATABASE CONNECTED');
+        console.log('DATABASE SYNCHRONIZED');
+        console.log('http://localhost:9000/api/v1');
+      } catch (err) {
+        console.log(err);
+      }
+    };
     
     module.exports = { sequelize, databaseConnect };
     `;
@@ -41,11 +41,14 @@ function database(typeDB, nameProject) {
     const mongoose = `const { db } = require("../config/env.config");
     const mongoose = require('mongoose');
   
-    function databaseConnect(){
-      mongoose
-        .connect(db.uri)
-        .then(() => console.log("DATABASE CONNECTED"))
-        .catch((err) => console.error(err));
+    const databaseConnect = async () => {
+      try {
+        await mongoose.connect(db.uri);
+        console.log('DATABASE CONNECTED');
+        console.log('http://localhost:9000/api/v1');
+      } catch (err) {
+        console.log(err);
+      }
     }
     
     module.exports = databaseConnect;
