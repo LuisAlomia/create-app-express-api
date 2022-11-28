@@ -36,7 +36,7 @@ To create a project, simply run:
 
 It will look like the image even though sequelize was selected for this case.
 
-![](./src/assets/images/image1.PNG)
+![](./express_api/src/assets/images/image1.PNG)
 
 We wait a moment for the configurations to be made, install the libraries and create the file structure.
 
@@ -59,7 +59,7 @@ We wait a moment for the configurations to be made, install the libraries and cr
             |--index.js          # Express app
             |--app.js            # App entry point
 
-![](./src/assets/images/image2.PNG)
+![](./express_api/src/assets/images/image2.PNG)
 
 Once all the default configurations have been made and the dependencies installed, we will be ready to start the next step.
 
@@ -88,8 +88,8 @@ Once the database credentials are configured, we enter the following commands in
     npm run dev
     npm run start
 
-![](./src/assets/images/image3.PNG)
-![](./src/assets/images/image4.PNG)
+![](./express_api/src/assets/images/image3.PNG)
+![](./express_api/src/assets/images/image4.PNG)
 
 The application starts on port 9000 and connects to the database.
 Others will have the link to open the page and once we enter we will see the following window in the browser
@@ -100,7 +100,7 @@ at this point we will only have to enter the route **http://localhost:9000/api/v
 
 I hope you find it useful code
 
-![](./src/assets/images/image6.PNG)
+![](./express_api/src/assets/images/image6.PNG)
 
 ## Contribution
 
